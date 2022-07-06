@@ -1,3 +1,5 @@
 # setupserver
 
-Dies ist ein erster Test
+Setupscript für Windows Server
+
+

@@ -1,66 +1,63 @@
-$title = "AD Replication Health"
-$message = "You want to Install Active Directory Replication Health?"
-$yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Yes"
-$no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
-$options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
-$choice=$host.ui.PromptForChoice($title, $message, $options, 1)
-$ErrorActionPreference = "SilentlyContinue"
+$choice=0
+write-host @"
+Server Installationsscript von Stefan Becker
+Bitte verwenden Sie die Zifferntasten um durch
+das Menue zu navigieren
 
-if($choice -eq 0){
 
-New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
+"@
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri https://download.microsoft.com/download/6/8/8/688FFD30-8FB8-47BC-AD17-0E5467E4E979/adreplstatusInstaller.msi -OutFile C:\service\adreplstatus.msi
+function readinput {
+   
+   Write-Host -ForegroundColor Yellow -Object "
+   Bitte whlen Sie aus folgenden Mglichkeiten
+   1) Active Directory Health Tool
+   2) Active Directory Services
+   3) DHCP Server
+   
+   0) Abbrechen
+   "
 
-Msiexec.exe /I C:\service\adreplstatus.msi
-
-write-host("AD Replication Health wurde installiert")
-
-}else {
-   write-host("AD Replication Health wird nicht installiert")
 }
 
-$title = "DC Roles und RSAT"
-$message = "You want to Install Active Directory Roles with RSAT?"
-$yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Yes"
-$no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
-$options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
-$choice=$host.ui.PromptForChoice($title, $message, $options, 1)
-$ErrorActionPreference = "SilentlyContinue"
+function InstallAdHealth {
+   New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
 
-if($choice -eq 0){
-
-Install-WindowsFeature -Name AD-Domain-Services
-Install-WindowsFeature -Name RSAT-AD-Tools -IncludeAllSubFeature
-Install-WindowsFeature -Name DNS 
-Install-WindowsFeature -Name RSAT-DNS-Server
-
-write-host("AD Rolen wurden installiert")
-
-}else {
-   write-host("AD Rollen wird nicht installiert")
+   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+   Invoke-WebRequest -Uri https://download.microsoft.com/download/6/8/8/688FFD30-8FB8-47BC-AD17-0E5467E4E979/adreplstatusInstaller.msi -OutFile C:\service\adreplstatus.msi
+   
+   Msiexec.exe /I C:\service\adreplstatus.msi   
 }
 
-
-$title = "SMBv1"
-$message = "You want to Install SMBv1?"
-$yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Yes"
-$no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
-$options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
-$choice=$host.ui.PromptForChoice($title, $message, $options, 1)
-$ErrorActionPreference = "SilentlyContinue"
-
-if($choice -eq 0){
-
-Install-WindowsFeature -Name FS-SMB1 -IncludeAllSubFeature
-
-
-write-host("SMBv1 wurde installiert, bitte Neustart ausführen")
-
-}else {
-   write-host("SMBv1 wird nicht installiert")
+function InstallADServices {
+   Install-WindowsFeature -Name AD-Domain-Services
+   Install-WindowsFeature -Name RSAT-AD-Tools -IncludeAllSubFeature
+   Install-WindowsFeature -Name DNS 
+   Install-WindowsFeature -Name RSAT-DNS-Server
 }
+
+function InstallSMBv1 {
+   Install-WindowsFeature -Name FS-SMB1 -IncludeAllSubFeature
+}
+Start-Sleep -Seconds 5
+
+function DisableFirewall {
+   Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False   
+}
+
+readinput
+
+$choice= Read-Host
+
+switch ($choice)
+{
+   0 { Break mylabel }
+   1 {
+      pause
+      Break mylabel
+   }
+}
+
 
 $title = "Firewall disable"
 $message = "You want to disable Widnows Firewall?"
@@ -72,13 +69,14 @@ $ErrorActionPreference = "SilentlyContinue"
 
 if($choice -eq 0){
 
-Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
 
 write-host("Windows Firewall deaktiviert")
 
 }else {
-   write-host("Keine Änderung an der Windows Firewall")
+   write-host("Keine nderung an der Windows Firewall")
 }
+
 
 
 pause

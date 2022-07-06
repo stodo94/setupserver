@@ -1,23 +1,72 @@
-$choice=0
-write-host @"
-Server Installationsscript von Stefan Becker
-Bitte verwenden Sie die Zifferntasten um durch
-das Menue zu navigieren
+$choicemain=$null
+$choice1=$null
+$choice2=$null
+$choice3=$null
+$choice4=$null
 
+Clear-Host
+write-host -ForegroundColor Red "
+Server SetupScript by Stefan Becker
+Please use Numbers to get trough the menu
+"
 
-"@
-
-function readinput {
-   
+function readinput (){
+   Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
-   Bitte whlen Sie aus folgenden Mglichkeiten
+   Main Menu
+   Choose from the following Number
    1) Active Directory Health Tool
    2) Active Directory Services
    3) DHCP Server
+   4) Disable Firewall
    
    0) Abbrechen
    "
+   $choiceread=Read-Host
+   return $choiceread
+}
 
+function readinputad (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Active Directory Services
+   Choose the following Number
+   1) Active Directory Services
+   2) Active Directory Services incl Management
+   3) Active Directory Management
+   
+   0) Abbrechen
+   "
+   $choiceread=Read-Host
+   return $choiceread
+}
+
+function readinputfirewall (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenu Disable Firewall
+   Are you sure?
+   1) YES
+
+   0) Abbrechen
+   "
+   $choiceread=Read-Host
+   return $choiceread
+}
+
+function readinputdhcp {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue DHCP Services
+   Choose the following Number
+   1) DHCP Service
+   2) DHCP Service incl Management
+   3) DHCP Management
+
+   0) Abbrechen
+   "
+   $choiceread=Read-Host
+   return $choiceread
 }
 
 function InstallAdHealth {
@@ -31,9 +80,20 @@ function InstallAdHealth {
 
 function InstallADServices {
    Install-WindowsFeature -Name AD-Domain-Services
-   Install-WindowsFeature -Name RSAT-AD-Tools -IncludeAllSubFeature
    Install-WindowsFeature -Name DNS 
+}
+
+function InstallADManagement {
+   Install-WindowsFeature -Name RSAT-AD-Tools -IncludeAllSubFeature
    Install-WindowsFeature -Name RSAT-DNS-Server
+}
+
+function InstallDHCP {
+   Install-WindowsFeature -Name DHCP   
+}
+
+function InstallDHCPManagement {
+   Install-WindowsFeature -Name RSAT-DHCP   
 }
 
 function InstallSMBv1 {
@@ -45,38 +105,64 @@ function DisableFirewall {
    Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False   
 }
 
-readinput
+function wait {
+   Start-Sleep -Seconds 2   
+}
 
-$choice= Read-Host
-
-switch ($choice)
-{
+do {
+   $choicemain=readinput
+   switch ($choicemain)
+   {
    0 { Break mylabel }
    1 {
-      pause
-      Break mylabel
+      Write-Host "  Aktuell nicht umgesetzt"
+      Start-Sleep -Seconds 2
+      $choicemain=$null
    }
-}
-
-
-$title = "Firewall disable"
-$message = "You want to disable Widnows Firewall?"
-$yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Yes"
-$no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
-$options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
-$choice=$host.ui.PromptForChoice($title, $message, $options, 1)
-$ErrorActionPreference = "SilentlyContinue"
-
-if($choice -eq 0){
-
-
-
-write-host("Windows Firewall deaktiviert")
-
-}else {
-   write-host("Keine nderung an der Windows Firewall")
-}
-
-
-
-pause
+   2 { $choice2=readinputad
+       switch ($choice2) {
+         1 {
+            InstallADServices
+            wait
+         }
+         2 {
+            InstallADServices
+            InstallADManagement
+            wait
+         }
+         3 {
+            InstallADManagement
+            wait
+         }
+      }
+      $choice2=$null
+      $choicemain=$null
+   }
+   3 {
+      $choice3=readinputdhcp
+      switch ($choice3) {
+         1 {
+            InstallDHCP
+         }
+         2 {
+            InstallDHCP
+            InstallDHCPManagement
+         }
+         3 {
+            InstallDHCPManagement
+         }
+      }
+      $choice3=$null
+      $choicemain=$null
+   }
+   4{
+      $choice4=readinputfirewall
+      switch ($choice4) {
+         1 {
+            DisableFirewall
+            wait
+         }
+      } 
+   }
+   }
+} until ( $choice1 -eq 0 )

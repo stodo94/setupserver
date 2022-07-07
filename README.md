@@ -1,6 +1,4 @@
 # setupserver
 
-Setup Script for Windows Server
 
-
-test
+Setupscript für Windows Server

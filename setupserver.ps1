@@ -3,6 +3,7 @@ $choice1=$null
 $choice2=$null
 $choice3=$null
 $choice4=$null
+$choice5=$null
 
 Clear-Host
 write-host -ForegroundColor Red "
@@ -19,6 +20,7 @@ function readinput (){
    2) Active Directory Services
    3) DHCP Server
    4) Disable Firewall
+   5) Windows Patches
    
    0) Abbrechen
    "
@@ -62,6 +64,21 @@ function readinputdhcp {
    1) DHCP Service
    2) DHCP Service incl Management
    3) DHCP Management
+
+   0) Abbrechen
+   "
+   $choiceread=Read-Host
+   return $choiceread
+}
+
+function readinputwindowspatch {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Windows Patches
+   Choose the following Number
+   1) Install Windows Patch Management Tools (required once)
+   2) Search for Windows Updates
+   3) Install Windows Updates
 
    0) Abbrechen
    "
@@ -166,6 +183,12 @@ do {
             wait
          }
       } 
+   }
+   5{
+      Write-Host "  Aktuell nicht umgesetzt"
+      wait
+      $choicemain=$null
+      $choice5=$null
    }
    }
 } until ( $choice1 -eq 0 )

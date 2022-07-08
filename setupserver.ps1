@@ -24,7 +24,7 @@ function readinput (){
    
    0) Abbrechen
    "
-   $choiceread=Read-Host
+   $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -39,7 +39,7 @@ function readinputad (){
    
    0) Abbrechen
    "
-   $choiceread=Read-Host
+   $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -52,7 +52,7 @@ function readinputfirewall (){
 
    0) Abbrechen
    "
-   $choiceread=Read-Host
+   $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -67,7 +67,7 @@ function readinputdhcp {
 
    0) Abbrechen
    "
-   $choiceread=Read-Host
+   $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -82,7 +82,7 @@ function readinputwindowspatch {
 
    0) Abbrechen
    "
-   $choiceread=Read-Host
+   $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -185,8 +185,21 @@ do {
       } 
    }
    5{
-      Write-Host "  Aktuell nicht umgesetzt"
-      wait
+      $choice5=readinputwindowspatch
+      switch ($choice5) {
+         1 {
+            Install-Module PSWindowsUpdate -Force
+            wait
+         }
+         2 {
+            Get-WindowsUpdate
+            wait
+         }
+         3 {
+            Get-WindowsUpdate -AcceptAll -Install
+            wait
+         }
+      }
       $choicemain=$null
       $choice5=$null
    }

@@ -116,7 +116,7 @@ do {
    0 { Break mylabel }
    1 {
       Write-Host "  Aktuell nicht umgesetzt"
-      Start-Sleep -Seconds 2
+      wait
       $choicemain=$null
    }
    2 { $choice2=readinputad
@@ -143,13 +143,16 @@ do {
       switch ($choice3) {
          1 {
             InstallDHCP
+            wait
          }
          2 {
             InstallDHCP
             InstallDHCPManagement
+            wait
          }
          3 {
             InstallDHCPManagement
+            wait
          }
       }
       $choice3=$null

@@ -15,6 +15,10 @@ DHCP Server
 2) DHCP Service incl Management
 3) DHCP Management
 
+Windows Updates
+1) Search
+2) Install
+
 Furthermore the Windows Firewall can be disabled
 This Tool is very helpfull in a Windows Core Server Environment.
 But works also in the GUI based Installation

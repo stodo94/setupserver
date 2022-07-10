@@ -1,4 +1,3 @@
-
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
@@ -187,4 +186,4 @@ do {
       }
    }
    }
-} until ( $choice1 -eq 0 )
+} until ( $choicemain -eq 0 )

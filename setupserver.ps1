@@ -1,9 +1,3 @@
-$choicemain=$null
-$choice1=$null
-$choice2=$null
-$choice3=$null
-$choice4=$null
-$choice5=$null
 
 Clear-Host
 write-host -ForegroundColor Red "
@@ -127,17 +121,15 @@ function wait {
 }
 
 do {
-   $choicemain=readinput
-   switch ($choicemain)
+   switch (readinput)
    {
    0 { Break mylabel }
    1 {
       Write-Host "  Aktuell nicht umgesetzt"
       wait
-      $choicemain=$null
    }
-   2 { $choice2=readinputad
-       switch ($choice2) {
+   2 { 
+       switch (readinputad) {
          1 {
             InstallADServices
             wait
@@ -152,12 +144,9 @@ do {
             wait
          }
       }
-      $choice2=$null
-      $choicemain=$null
    }
    3 {
-      $choice3=readinputdhcp
-      switch ($choice3) {
+      switch (readinputdhcp) {
          1 {
             InstallDHCP
             wait
@@ -172,12 +161,9 @@ do {
             wait
          }
       }
-      $choice3=$null
-      $choicemain=$null
    }
    4{
-      $choice4=readinputfirewall
-      switch ($choice4) {
+      switch (readinputfirewall) {
          1 {
             DisableFirewall
             wait
@@ -185,8 +171,7 @@ do {
       } 
    }
    5{
-      $choice5=readinputwindowspatch
-      switch ($choice5) {
+      switch (readinputwindowspatch) {
          1 {
             Install-Module PSWindowsUpdate -Force
             wait
@@ -200,8 +185,6 @@ do {
             wait
          }
       }
-      $choicemain=$null
-      $choice5=$null
    }
    }
 } until ( $choice1 -eq 0 )

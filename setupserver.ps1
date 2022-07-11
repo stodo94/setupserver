@@ -5,8 +5,6 @@ Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
 "
 
-#Test
-
 function readinput (){
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -17,6 +15,7 @@ function readinput (){
    3) DHCP Server
    4) Disable Firewall
    5) Windows Patches
+   6) Install MS Edge
    
    0) Abbrechen
    "
@@ -118,6 +117,32 @@ function DisableFirewall {
    Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False   
 }
 
+function InstallWGet {
+   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+   New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
+   $wgetbin = 'c:\service\wget.exe'
+
+   #If the file does not exist, create it.
+   if (-not(Test-Path -Path $wgetbin -PathType Leaf)) {
+     try {
+      $ProgressPreference = 'SilentlyContinue'
+      Invoke-WebRequest -Uri https://github.com/webfolderio/wget-windows/releases/download/v1.21.3.june.21.2022/wget-gnutls-x64.exe -OutFile C:\service\wget.exe | Out-Null
+      $ProgressPreference = 'Continue'
+     }
+     catch {
+         throw $_.Exception.Message
+     }
+   }
+   # If the file already exists, show the message and do nothing.
+   else {   
+   }
+}
+
+function InstallMSEdge {
+   InstallWGet
+   C:\Service\wget.exe http://go.microsoft.com/fwlink/?LinkID=2093437 -q --show-progress -O C:\service\edgex64.msi
+   Msiexec.exe /i C:\service\edgex64.msi /qn
+}
 function wait {
    Start-Sleep -Seconds 2   
 }
@@ -188,6 +213,9 @@ do {
             wait
          }
       }
+   }
+   6 {
+      InstallMSEdge
    }
    }
  } until ($choicemain-eq 0) 

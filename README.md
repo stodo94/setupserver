@@ -19,6 +19,9 @@ Windows Updates
 1) Search
 2) Install
 
+The Following Software can be installed directly with this script:
+1) Microsoft Edge
+
 Furthermore the Windows Firewall can be disabled
 This Tool is very helpfull in a Windows Core Server Environment.
 But works also in the GUI based Installation

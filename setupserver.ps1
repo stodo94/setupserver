@@ -1,8 +1,11 @@
+$choicemain=$null
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
 "
+
+#Test
 
 function readinput (){
    Clear-Host
@@ -120,8 +123,7 @@ function wait {
 }
 
 do {
-   switch (readinput)
-   {
+   switch (readinput) {
    0 { Break mylabel }
    1 {
       Write-Host "  Aktuell nicht umgesetzt"
@@ -186,4 +188,4 @@ do {
       }
    }
    }
-} until ( $choicemain -eq 0 )
+ } until ($choicemain-eq 0) 

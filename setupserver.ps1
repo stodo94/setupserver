@@ -112,7 +112,7 @@ function InstallDHCPManagement {
 function InstallSMBv1 {
    Install-WindowsFeature -Name FS-SMB1 -IncludeAllSubFeature
 }
-Start-Sleep -Seconds 5
+
 
 function DisableFirewall {
    Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False   
@@ -121,6 +121,8 @@ function DisableFirewall {
 function wait {
    Start-Sleep -Seconds 2   
 }
+
+Pause
 
 do {
    switch (readinput) {

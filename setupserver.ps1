@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion=v0.0.3
+$actualversion="v0.0.4"
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
@@ -145,6 +145,24 @@ function InstallMSEdge {
    C:\Service\wget.exe http://go.microsoft.com/fwlink/?LinkID=2093437 -q --show-progress -O C:\service\edgex64.msi
    Msiexec.exe /i C:\service\edgex64.msi /qn
 }
+
+function checkversion {
+   InstallWGet
+   C:\Service\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q --show-progress -O C:\service\version.csv
+   $version=Import-CSV -Path C:\service\version.csv
+   $newversion=$version.Version
+   $newversion
+   if ($newversion -notlike $actualversion) {
+      Write-Host -ForegroundColor Red "Please Load Newest Release"
+      wait
+      Set-Variable -Name choicemain -Value "0" -Scope 1
+   }
+   else {
+      Write-Host -ForegroundColor Yellow "NO UPDATE NEEDED"
+   }
+   wait
+}
+
 function wait {
    Start-Sleep -Seconds 2   
 }
@@ -153,7 +171,9 @@ Pause
 
 do {
    switch (readinput) {
-   0 { Break mylabel }
+   0 {
+      Break mylabel
+   }
    1 {
       Write-Host "  Aktuell nicht umgesetzt"
       wait
@@ -219,18 +239,9 @@ do {
    6 {
       InstallMSEdge
    }
-   9{
-      InstallWGet
-      C:\Service\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q --show-progress -O C:\service\version.csv
-      $version=Import-CSV -Path C:\service\version.csv
-      $newversion=$version.Version
-      if ($newversion -notlike $actualversion) {
-         <# Action to perform if the condition is true #>
-      }
-      else {
-         Write-Host -ForegroundColor Yellow "NO UPDATE NEEDED"
-      }
+   9 {
+      checkversion
       wait
    }
    }
- } until ($choicemain-eq 0) 
+} until ($choicemain-eq 0)

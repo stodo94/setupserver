@@ -1,4 +1,5 @@
 $choicemain=$null
+$actualversion=v0.0.3
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
@@ -219,7 +220,17 @@ do {
       InstallMSEdge
    }
    9{
-
+      InstallWGet
+      C:\Service\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q --show-progress -O C:\service\version.csv
+      $version=Import-CSV -Path C:\service\version.csv
+      $newversion=$version.Version
+      if ($newversion -notlike $actualversion) {
+         <# Action to perform if the condition is true #>
+      }
+      else {
+         Write-Host -ForegroundColor Yellow "NO UPDATE NEEDED"
+      }
+      wait
    }
    }
  } until ($choicemain-eq 0) 

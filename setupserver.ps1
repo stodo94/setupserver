@@ -7,6 +7,7 @@ Please use Numbers to get trough the menu
 "
 New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
+New-Item -Path "c:\service\setupserver" -Name "bin" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 
 function readinput (){
    Clear-Host
@@ -123,7 +124,6 @@ function DisableFirewall {
 
 function InstallWGet {
    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-   New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
    $wgetbin = "C:\service\setupserver\bin\wget.exe"
 
    #If the file does not exist, create it.

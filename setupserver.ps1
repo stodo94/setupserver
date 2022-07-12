@@ -5,6 +5,8 @@ write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
 "
+New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
+New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 
 function readinput (){
    Clear-Host
@@ -122,13 +124,13 @@ function DisableFirewall {
 function InstallWGet {
    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
-   $wgetbin = 'c:\service\wget.exe'
+   $wgetbin = "C:\service\setupserver\bin\wget.exe"
 
    #If the file does not exist, create it.
    if (-not(Test-Path -Path $wgetbin -PathType Leaf)) {
      try {
       $ProgressPreference = 'SilentlyContinue'
-      Invoke-WebRequest -Uri https://github.com/webfolderio/wget-windows/releases/download/v1.21.3.june.21.2022/wget-gnutls-x64.exe -OutFile C:\service\wget.exe | Out-Null
+      Invoke-WebRequest -Uri https://github.com/webfolderio/wget-windows/releases/download/v1.21.3.june.21.2022/wget-gnutls-x64.exe -OutFile C:\service\setupserver\bin\wget.exe | Out-Null
       $ProgressPreference = 'Continue'
      }
      catch {
@@ -142,18 +144,19 @@ function InstallWGet {
 
 function InstallMSEdge {
    InstallWGet
-   C:\Service\wget.exe http://go.microsoft.com/fwlink/?LinkID=2093437 -q --show-progress -O C:\service\edgex64.msi
-   Msiexec.exe /i C:\service\edgex64.msi /qn
+   C:\service\setupserver\bin\wget.exe http://go.microsoft.com/fwlink/?LinkID=2093437 -q --show-progress -O C:\service\setupserver\bin\edgex64.msi
+   Msiexec.exe /i C:\service\setupserver\bin\edgex64.msi /qn
 }
 
 function checkversion {
    InstallWGet
-   C:\Service\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q --show-progress -O C:\service\version.csv
-   $version=Import-CSV -Path C:\service\version.csv
+   C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q --show-progress -O C:\service\setupserver\bin\version.csv
+   $version=Import-CSV -Path C:\service\setupserver\bin\version.csv
    $newversion=$version.Version
    $newversion
    if ($newversion -notlike $actualversion) {
-      Write-Host -ForegroundColor Red "Please Load Newest Release"
+      C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/$newversion/setupserver.ps1 -q --show-progress -O C:\service\setupserver\setupserver.ps1
+      #Write-Host -ForegroundColor Red "Please Load Newest Release"
       wait
       Set-Variable -Name choicemain -Value "0" -Scope 1
    }

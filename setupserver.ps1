@@ -17,6 +17,7 @@ function readinput (){
    5) Windows Patches
    6) Install MS Edge
    
+   9) Selfupdate
    0) Abbrechen
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
@@ -201,7 +202,7 @@ do {
    5{
       switch (readinputwindowspatch) {
          1 {
-            Install-Module PSWindowsUpdate -Force
+            Install-Module PSWindowsUpdate -Force -SkipPublisherCheck
             wait
          }
          2 {
@@ -216,6 +217,9 @@ do {
    }
    6 {
       InstallMSEdge
+   }
+   9{
+
    }
    }
  } until ($choicemain-eq 0) 

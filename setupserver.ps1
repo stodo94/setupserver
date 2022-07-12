@@ -154,6 +154,7 @@ function checkversion {
    $version=Import-CSV -Path C:\service\setupserver\bin\version.csv
    $newversion=$version.Version
    $newversion
+   Remove-Item C:\Service\setupserver\bin\version.csv
    if ($newversion -notlike $actualversion) {
       C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/$newversion/setupserver.ps1 -q --show-progress -O C:\service\setupserver\setupserver.ps1
       #Write-Host -ForegroundColor Red "Please Load Newest Release"

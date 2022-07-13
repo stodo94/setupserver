@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.0.4"
+$actualversion="v0.1.0"
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker

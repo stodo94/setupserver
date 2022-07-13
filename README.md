@@ -23,5 +23,8 @@ The Following Software can be installed directly with this script:
 1) Microsoft Edge
 
 Furthermore the Windows Firewall can be disabled
+
+Since Version v0.0.4 the Script provides a self update function
+
 This Tool is very helpfull in a Windows Core Server Environment.
 But works also in the GUI based Installation

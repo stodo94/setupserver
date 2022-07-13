@@ -228,6 +228,7 @@ do {
    5{
       switch (readinputwindowspatch) {
          1 {
+            Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
             Install-Module PSWindowsUpdate -Force -SkipPublisherCheck
             wait
          }
@@ -236,7 +237,7 @@ do {
             wait
          }
          3 {
-            Get-WindowsUpdate -AcceptAll -Install
+            Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot
             wait
          }
       }

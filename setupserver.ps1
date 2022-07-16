@@ -122,7 +122,6 @@ function DisableFirewall {
 }
 
 function InstallWGet {
-   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
    $wgetbin = "C:\service\setupserver\bin\wget.exe"
 
    #If the file does not exist, create it.

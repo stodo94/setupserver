@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.1.0"
+$actualversion="v0.1.1"
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
@@ -8,6 +8,8 @@ Please use Numbers to get trough the menu
 New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\service\setupserver" -Name "bin" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 function readinput (){
    Clear-Host
@@ -88,10 +90,7 @@ function readinputwindowspatch {
 
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
-
-   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
    Invoke-WebRequest -Uri https://download.microsoft.com/download/6/8/8/688FFD30-8FB8-47BC-AD17-0E5467E4E979/adreplstatusInstaller.msi -OutFile C:\service\adreplstatus.msi
-   
    Msiexec.exe /I C:\service\adreplstatus.msi   
 }
 

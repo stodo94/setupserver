@@ -233,12 +233,12 @@ do {
             wait
          }
          2 {
-            Get-WindowsUpdate
-            wait
+            Get-WindowsUpdate | Format-Table
+            Pause
          }
          3 {
-            Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot
-            wait
+            Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot | Format-Table
+            Pause
          }
       }
    }

@@ -1,11 +1,11 @@
 $choicemain=$null
-$actualversion="v0.2.0"
+$actualversion="v0.2.1"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
 
-Version: v0.2.0
+Version: $actualversion
 "
 New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
@@ -188,7 +188,7 @@ function InstallMSEdge {
 
 function checkversion {
    InstallWGet
-   C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q --show-progress -O C:\service\setupserver\bin\version.csv
+   C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q -O C:\service\setupserver\bin\version.csv
    $version=Import-CSV -Path C:\service\setupserver\bin\version.csv
    $newversion=$version.Version
    $newversion

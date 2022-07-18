@@ -1,9 +1,11 @@
 $choicemain=$null
-$actualversion="v0.1.1"
+$actualversion="v0.2.0"
 Clear-Host
-write-host -ForegroundColor Red "
+write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
+
+Version: v0.2.0
 "
 New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
@@ -16,15 +18,16 @@ function readinput (){
    Write-Host -ForegroundColor Yellow -Object "
    Main Menu
    Choose from the following Number
-   1) Active Directory Health Tool
+   1) Software
    2) Active Directory Services
    3) DHCP Server
    4) Disable Firewall
    5) Windows Patches
-   6) Install MS Edge
+   6) Printserver
+
    
    9) Selfupdate
-   0) Abbrechen
+   0) Cancel
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
@@ -39,7 +42,7 @@ function readinputad (){
    2) Active Directory Services incl Management
    3) Active Directory Management
    
-   0) Abbrechen
+   0) Cancel
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
@@ -52,7 +55,7 @@ function readinputfirewall (){
    Are you sure?
    1) YES
 
-   0) Abbrechen
+   0) Cancel
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
@@ -67,8 +70,22 @@ function readinputdhcp {
    2) DHCP Service incl Management
    3) DHCP Management
 
-   0) Abbrechen
+   0) Cancel
    "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+function readinputsoftware {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object '
+   Submenu Software
+   Choose the following Number
+   1) Active Directory Health Tool
+   2) Microsoft Edge
+   3) Download SQL Express 2019
+   4) .net Framework 4.8
+   5) to continue...'   
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
@@ -82,7 +99,22 @@ function readinputwindowspatch {
    2) Search for Windows Updates
    3) Install Windows Updates
 
-   0) Abbrechen
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+function readinputprintserver {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Printserverroles
+   Choose the following Number
+   1) Print Service
+   2) Print Service incl Management
+   3) Print Management
+
+   0) Cancel
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
@@ -110,6 +142,14 @@ function InstallDHCP {
 
 function InstallDHCPManagement {
    Install-WindowsFeature -Name RSAT-DHCP   
+}
+
+function InstallPrintserver {
+   Install-WindowsFeature -Name Print-Server  
+}
+
+function InstallPrintMgmt {
+   Install-WindowsFeature -Name RSAT-Print-Services
 }
 
 function InstallSMBv1 {
@@ -167,35 +207,78 @@ function checkversion {
    }
 }
 
+function downloadsqlexpress {
+   #Write-Host -ForegroundColor Yellow "  Development in Progress"
+   Write-Host -ForegroundColor Blue -Object "  Download Path C:\Service\SQL2019Express"
+   waitforenter
+   New-Item -Path "c:\Service" -Name "SQL2019Express" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
+   C:\service\setupserver\bin\wget.exe https://download.microsoft.com/download/7/c/1/7c14e92e-bdcb-4f89-b7cf-93543e7112d1/SQLEXPRADV_x64_ENU.exe -q --show-progress -P C:\Service\SQL2019Express
+}
+
+function InstallDotNet48 {
+   InstallWGet
+   C:\Service\setupserver\bin\wget.exe https://go.microsoft.com/fwlink/?linkid=2088631 -q -O C:\service\setupserver\bin\dotnet48.exe --show-progress
+   C:\Service\setupserver\bin\dotnet48.exe /q /norestart
+   Write-Host -ForegroundColor Green "  Reboot and Windows Updates recommended"
+   Start-Sleep -Seconds 6
+}
+
 function wait {
    Start-Sleep -Seconds 2   
 }
 
-Pause
+function waitforenter {
+   Write-Host -ForegroundColor Green -NoNewLine 'Press any key to continue...';
+   $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');   
+}
+
+waitforenter
 
 do {
    switch (readinput) {
+   # Abbruch
    0 {
       Break mylabel
    }
+   # Software
    1 {
-      Write-Host "  Aktuell nicht umgesetzt"
-      wait
+      switch(readinputsoftware) {
+         #ActiveDirectory Health Tool
+         1{
+            Write-Host -ForegroundColor Red "  Not functional at the Moment"
+            Write-Host -ForegroundColor Red "  Microsoft is having issues at the Moment"
+            Write-Host -ForegroundColor Red "  If Microsoft will fix it, the Installation"
+            Write-Host -ForegroundColor Red "  will be available"
+            waitforenter
+         }
+         2{
+            InstallMSEdge
+            waitforenter
+         }
+         3{
+            downloadsqlexpress
+            waitforenter
+         }
+         4{
+            InstallDotNet48
+            waitforenter
+         }
+      }
    }
    2 { 
        switch (readinputad) {
          1 {
             InstallADServices
-            wait
+            waitforenter
          }
          2 {
             InstallADServices
             InstallADManagement
-            wait
+            waitforenter
          }
          3 {
             InstallADManagement
-            wait
+            waitforenter
          }
       }
    }
@@ -203,16 +286,16 @@ do {
       switch (readinputdhcp) {
          1 {
             InstallDHCP
-            wait
+            waitforenter
          }
          2 {
             InstallDHCP
             InstallDHCPManagement
-            wait
+            waitforenter
          }
          3 {
             InstallDHCPManagement
-            wait
+            waitforenter
          }
       }
    }
@@ -220,7 +303,7 @@ do {
       switch (readinputfirewall) {
          1 {
             DisableFirewall
-            wait
+            waitforenter
          }
       } 
    }
@@ -229,24 +312,38 @@ do {
          1 {
             Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
             Install-Module PSWindowsUpdate -Force -SkipPublisherCheck
-            wait
+            waitforenter
          }
          2 {
             Get-WindowsUpdate | Format-Table
-            Pause
+            waitforenter
          }
          3 {
             Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot | Format-Table
-            Pause
+            waitforenter
          }
       }
    }
-   6 {
-      InstallMSEdge
+   6{
+      switch (readinputprintserver) {
+         1{
+            InstallPrintserver
+            waitforenter
+         }
+         2{
+            InstallPrintserver
+            InstallPrintMgmt
+            waitforenter
+         }
+         3{
+            InstallPrintMgmt
+            waitforenter
+         }
+      }
    }
    9 {
       checkversion
-      wait
+      waitforenter
    }
    }
 } until ($choicemain-eq 0)

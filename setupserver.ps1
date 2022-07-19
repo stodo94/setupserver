@@ -5,7 +5,7 @@ write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
 
-Version: v0.2.0
+Version: $actualversion
 "
 New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null

@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.2.0"
+$actualversion="v0.2.1"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -85,7 +85,9 @@ function readinputsoftware {
    2) Microsoft Edge
    3) Download SQL Express 2019
    4) .net Framework 4.8
-   5) to continue...'   
+   5) 7zip
+
+   6) to continue...'   
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
@@ -223,6 +225,12 @@ function InstallDotNet48 {
    Start-Sleep -Seconds 6
 }
 
+function Install7zip {
+   InstallWGet
+   C:\Service\setupserver\bin\wget.exe https://7-zip.org/a/7z2201-x64.msi -q -P C:\Service\setupserver\bin --show-progress
+   msiexec.exe /I C:\Service\setupserver\bin\7z2201-x64.msi /qn   
+}
+
 function wait {
    Start-Sleep -Seconds 2   
 }
@@ -261,6 +269,10 @@ do {
          }
          4{
             InstallDotNet48
+            waitforenter
+         }
+         5{
+            Install7zip
             waitforenter
          }
       }

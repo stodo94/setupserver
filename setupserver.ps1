@@ -212,6 +212,7 @@ function downloadsqlexpress {
    #Write-Host -ForegroundColor Yellow "  Development in Progress"
    Write-Host -ForegroundColor Blue -Object "  Download Path C:\Service\SQL2019Express"
    waitforenter
+   InstallWGet
    New-Item -Path "c:\Service" -Name "SQL2019Express" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
    C:\service\setupserver\bin\wget.exe https://download.microsoft.com/download/7/c/1/7c14e92e-bdcb-4f89-b7cf-93543e7112d1/SQLEXPRADV_x64_ENU.exe -q --show-progress -P C:\Service\SQL2019Express
 }

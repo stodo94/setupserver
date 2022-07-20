@@ -1,2 +1,5 @@
+v0.2.2:
+- Changed Windows Update Settings to exclude drivers
+
 v0.2.1:
 - Added 7zip Setup

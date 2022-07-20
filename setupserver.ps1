@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.2.1"
+$actualversion="v0.2.2"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -326,11 +326,11 @@ do {
             waitforenter
          }
          2 {
-            Get-WindowsUpdate | Format-Table
+            Get-WindowsUpdate -NotCategory 'Drivers' | Format-Table
             waitforenter
          }
          3 {
-            Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot | Format-Table
+            Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot -NotCategory 'Drivers' | Format-Table
             waitforenter
          }
       }

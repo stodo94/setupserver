@@ -15,12 +15,20 @@ DHCP Server
 2) DHCP Service incl Management
 3) DHCP Management
 
+Printserver
+1) Printserver
+2) Printserver incl Management
+3) Printserver Management Tools Only
+
 Windows Updates
 1) Search
 2) Install
 
 The Following Software can be installed directly with this script:
 1) Microsoft Edge
+2) 7zip
+3) Dotnet Framework 4.8
+4) SQL Express 2019 (Download only)
 
 Furthermore the Windows Firewall can be disabled
 

@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.2.2"
+$actualversion="v0.2.4"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -24,6 +24,7 @@ function readinput (){
    4) Disable Firewall
    5) Windows Patches
    6) Printserver
+   7) DFS Replication / Namespace
 
    
    9) Selfupdate
@@ -120,6 +121,21 @@ function readinputprintserver {
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
+}
+
+function readinputdfs {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue DFS Serverroles
+   Choose the following Number
+   1) DFS Replication / DFS Namespace
+   2) DFS Replication / DFS Namespace incl Management
+   3) DFS Replication / DFS Namespace Management Tools Only
+
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread 
 }
 
 function InstallAdHealth {
@@ -229,6 +245,14 @@ function Install7zip {
    InstallWGet
    C:\Service\setupserver\bin\wget.exe https://7-zip.org/a/7z2201-x64.msi -q -P C:\Service\setupserver\bin --show-progress
    msiexec.exe /I C:\Service\setupserver\bin\7z2201-x64.msi /qn   
+}
+
+function InstallDFS {
+   Install-WindowsFeature -Name FS-DFS-Namespace,FS-DFS-Replication   
+}
+
+function InstallDFSMgmt {
+   Install-WindowsFeature -Name RSAT-DFS-Mgmt-Con   
 }
 
 function wait {
@@ -349,6 +373,23 @@ do {
          }
          3{
             InstallPrintMgmt
+            waitforenter
+         }
+      }
+   }
+   7{
+      switch (readinputdfs) {
+         1{
+            InstallDFS
+            waitforenter
+         }
+         2{
+            InstallDFS
+            InstallDFSMgmt
+            waitforenter
+         }
+         3{
+            InstallDFSMgmt
             waitforenter
          }
       }

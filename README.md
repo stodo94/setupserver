@@ -20,6 +20,11 @@ Printserver
 2) Printserver incl Management
 3) Printserver Management Tools Only
 
+DFS 
+1) DFS Replication / DFS Namespace
+2) DFS Replication / DFS Namespace incl Management
+3) DFS Replication / DFS Namespace Management Tools Only
+
 Windows Updates
 1) Search
 2) Install

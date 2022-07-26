@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.2.6"
+$actualversion="v0.3.0"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -19,12 +19,12 @@ function readinput (){
    Main Menu
    Choose from the following Number
    1) Software
-   2) Active Directory Services
-   3) DHCP Server
+   2) Windows Server Roles / Features
+   3) ...
    4) Disable Firewall
    5) Windows Patches
-   6) Printserver
-   7) DFS Replication / Namespace
+   6) ...
+   7) ...
 
    
    9) Selfupdate
@@ -32,6 +32,25 @@ function readinput (){
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
+}
+
+function readinputroles {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Windows Server Roles and Features
+   Choose from the following Number
+   1) Active Directory
+   2) DHCP Server
+   3) Printserver
+   4) DFS Replication / Namespace
+   5) ...
+   6) ...
+   7) ...
+
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread   
 }
 
 function readinputad (){
@@ -85,8 +104,9 @@ function readinputsoftware {
    1) Active Directory Health Tool
    2) Microsoft Edge
    3) Download SQL Express 2019
-   4) .net Framework 4.8
-   5) 7zip
+   4) SQL Management Studio
+   5) .net Framework 4.8
+   6) 7zip
 
    6) to continue...'   
    $choiceread=Read-Host -Prompt 'Please input Number'
@@ -233,6 +253,12 @@ function downloadsqlexpress {
    C:\service\setupserver\bin\wget.exe https://download.microsoft.com/download/7/c/1/7c14e92e-bdcb-4f89-b7cf-93543e7112d1/SQLEXPRADV_x64_ENU.exe -q --show-progress -P C:\Service\SQL2019Express
 }
 
+function installssms {
+   InstallWGet
+   C:\service\setupserver\bin\wget.exe https://aka.ms/ssmsfullsetup -q --show-progress -O C:\Service\setupserver\bin\smssfull.exe
+   C:\Service\setupserver\bin\smssfull.exe /install /quiet /norestart
+}
+
 function InstallDotNet48 {
    InstallWGet
    C:\Service\setupserver\bin\wget.exe https://go.microsoft.com/fwlink/?linkid=2088631 -q -O C:\service\setupserver\bin\dotnet48.exe --show-progress
@@ -292,48 +318,99 @@ do {
             waitforenter
          }
          4{
-            InstallDotNet48
+            installssms
             waitforenter
          }
          5{
+            InstallDotNet48
+            waitforenter
+         }
+         6{
             Install7zip
             waitforenter
          }
       }
    }
+   #Windows Server Roles / Features
    2 { 
-       switch (readinputad) {
-         1 {
-            InstallADServices
-            waitforenter
+      switch (readinputroles) {
+         #Active Directory
+         1{
+            switch (readinputad) {
+               1 {
+                  InstallADServices
+                  waitforenter
+               }
+               2 {
+                  InstallADServices
+                  InstallADManagement
+                  waitforenter
+               }
+               3 {
+                  InstallADManagement
+                  waitforenter
+               }
+            }
          }
-         2 {
-            InstallADServices
-            InstallADManagement
-            waitforenter
+         #DHCPServer
+         2{
+            switch (readinputdhcp) {
+               1 {
+                  InstallDHCP
+                  waitforenter
+               }
+               2 {
+                  InstallDHCP
+                  InstallDHCPManagement
+                  waitforenter
+               }
+               3 {
+                  InstallDHCPManagement
+                  waitforenter
+               }
+            }
          }
-         3 {
-            InstallADManagement
-            waitforenter
+         #Printserver
+         3{
+            switch (readinputprintserver) {
+               1{
+                  InstallPrintserver
+                  waitforenter
+               }
+               2{
+                  InstallPrintserver
+                  InstallPrintMgmt
+                  waitforenter
+               }
+               3{
+                  InstallPrintMgmt
+                  waitforenter
+               }
+            }
+         }
+         #DFS Replicaton
+         4{
+            switch (readinputdfs) {
+               1{
+                  InstallDFS
+                  waitforenter
+               }
+               2{
+                  InstallDFS
+                  InstallDFSMgmt
+                  waitforenter
+               }
+               3{
+                  InstallDFSMgmt
+                  waitforenter
+               }
+            }
          }
       }
+       
    }
    3 {
-      switch (readinputdhcp) {
-         1 {
-            InstallDHCP
-            waitforenter
-         }
-         2 {
-            InstallDHCP
-            InstallDHCPManagement
-            waitforenter
-         }
-         3 {
-            InstallDHCPManagement
-            waitforenter
-         }
-      }
+      
    }
    4{
       switch (readinputfirewall) {
@@ -361,38 +438,10 @@ do {
       }
    }
    6{
-      switch (readinputprintserver) {
-         1{
-            InstallPrintserver
-            waitforenter
-         }
-         2{
-            InstallPrintserver
-            InstallPrintMgmt
-            waitforenter
-         }
-         3{
-            InstallPrintMgmt
-            waitforenter
-         }
-      }
+      
    }
    7{
-      switch (readinputdfs) {
-         1{
-            InstallDFS
-            waitforenter
-         }
-         2{
-            InstallDFS
-            InstallDFSMgmt
-            waitforenter
-         }
-         3{
-            InstallDFSMgmt
-            waitforenter
-         }
-      }
+      
    }
    9 {
       checkversion

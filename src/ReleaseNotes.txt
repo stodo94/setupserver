@@ -1,3 +1,6 @@
+v0.3.0:
+- Restructured Menu Added SSMS
+
 v0.2.6:
 - fixed version control
 

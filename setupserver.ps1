@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.3.0"
+$actualversion="v0.3.1"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -16,18 +16,20 @@ New-Item -Path "c:\service\setupserver" -Name "bin" -ItemType "directory" -Error
 function readinput (){
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
+   ----------------------------------------
+   Server Hostname: $env:computername
+   ----------------------------------------
    Main Menu
    Choose from the following Number
    1) Software
    2) Windows Server Roles / Features
-   3) ...
-   4) Disable Firewall
-   5) Windows Patches
-   6) ...
-   7) ...
-
+   
+   3) Disable Firewall
+   4) Windows Patches
    
    9) Selfupdate
+   10) Logout User
+   11) Restart Server/PC
    0) Cancel
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
@@ -156,6 +158,31 @@ function readinputdfs {
    "
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread 
+}
+
+function readinputlogoff {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Logoff
+   Do You Want To Logoff Now
+   0) NO
+   1) YES
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+function readinputrestart {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Restart
+   Do You Want To Restart Now
+   0) NO
+   1) YES
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+   
 }
 
 function InstallAdHealth {
@@ -409,10 +436,8 @@ do {
       }
        
    }
-   3 {
-      
-   }
-   4{
+   #Disable Firewall
+   3{
       switch (readinputfirewall) {
          1 {
             DisableFirewall
@@ -420,7 +445,8 @@ do {
          }
       } 
    }
-   5{
+   #Windows Updates
+   4{
       switch (readinputwindowspatch) {
          1 {
             Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
@@ -446,6 +472,13 @@ do {
    9 {
       checkversion
       waitforenter
+   }
+   10 {
+      switch (readinputlogoff) {
+         1{
+            logoff.exe
+         }
+      }
    }
    }
 } until ($choicemain-eq 0)

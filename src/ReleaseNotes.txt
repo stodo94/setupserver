@@ -1,3 +1,6 @@
+v0.3.1:
+- New Main Menu; Logoff
+
 v0.3.0:
 - Restructured Menu Added SSMS
 

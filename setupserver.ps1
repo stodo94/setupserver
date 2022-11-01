@@ -336,22 +336,27 @@ do {
             Write-Host -ForegroundColor Red "  will be available"
             waitforenter
          }
+         #MS Edge Setup
          2{
             InstallMSEdge
             waitforenter
          }
+         # Download SQL Express 2019
          3{
             downloadsqlexpress
             waitforenter
          }
+         #Download and Install SQL Managment Studio
          4{
             installssms
             waitforenter
          }
+         #Download and Install .net 4.8
          5{
             InstallDotNet48
             waitforenter
          }
+         #Download and Install 7zip
          6{
             Install7zip
             waitforenter
@@ -469,14 +474,25 @@ do {
    7{
       
    }
+   #Selfupdate
    9 {
       checkversion
       waitforenter
    }
+   #Logoff Current User
    10 {
       switch (readinputlogoff) {
          1{
             logoff.exe
+         }
+      }
+   }
+   #Restart Server / Computer
+   11 {
+      switch (readinputrestart) {
+         1{
+            Restart-Computer
+            waitforenter
          }
       }
    }

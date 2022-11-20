@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.3.1"
+$actualversion="v0.3.2"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -110,7 +110,7 @@ function readinputsoftware {
    5) .net Framework 4.8
    6) 7zip
 
-   6) to continue...'   
+   7) to continue...'   
    $choiceread=Read-Host -Prompt 'Please input Number'
    return $choiceread
 }

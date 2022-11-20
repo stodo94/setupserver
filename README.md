@@ -34,6 +34,7 @@ The Following Software can be installed directly with this script:
 2) 7zip
 3) Dotnet Framework 4.8
 4) SQL Express 2019 (Download only)
+5) SQL Management Studio
 
 Furthermore the Windows Firewall can be disabled
 

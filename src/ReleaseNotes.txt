@@ -1,5 +1,6 @@
 v0.3.3:
 - GroupPolicyManagement Tool Installation added (GPMC)
+- NPS Server
 
 
 v0.3.2:

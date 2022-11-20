@@ -46,7 +46,7 @@ function readinputroles {
    3) Printserver
    4) DFS Replication / Namespace
    5) Group Policy Management
-   6) ...
+   6) NPS Server
    7) ...
 
    0) Cancel
@@ -63,6 +63,21 @@ function readinputad (){
    1) Active Directory Services
    2) Active Directory Services incl Management
    3) Active Directory Management
+   
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+function readinputnps (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Network Policy Server
+   Choose the following Number
+   1) Network Policy Server
+   2) Network Policy Server incl Management
+   3) Network Policy Server Management only
    
    0) Cancel
    "
@@ -325,6 +340,14 @@ function InstallGPMC {
    Install-WindowsFeature -Name GPMC   
 }
 
+function InstallNPS {
+   Install-WindowsFeature -Name NPAS   
+}
+
+function InstallNPSMgmt {
+   Install-WindowsFeature -Name RSAT-NPAS   
+}
+
 function wait {
    Start-Sleep -Seconds 2   
 }
@@ -455,10 +478,29 @@ do {
                }
             }
          }
+         #GPMC Console
          5{
             switch (readinputgpmc) {
                1{
                   InstallGPMC
+                  waitforenter
+               }
+            }
+         }
+         #NPS Server
+         6{
+            switch (readinputnps) {
+               1{
+                  InstallNPS
+                  waitforenter
+               }
+               2{
+                  InstallNPS
+                  InstallNPSMgmt
+                  waitforenter
+               }
+               3{
+                  InstallNPSMgmt
                   waitforenter
                }
             }

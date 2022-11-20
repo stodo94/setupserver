@@ -8,8 +8,9 @@ With this Setup Script it is possible to install the following Roles and Feature
 Active Directory Services
 DHCP Server
 Printserver
-DFS 
+DFS
 Group Policy Management
+NPS - Network Policy Server
 
 Windows Updates
 1) Search

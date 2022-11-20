@@ -23,10 +23,10 @@ function readinput (){
    Choose from the following Number
    1) Software
    2) Windows Server Roles / Features
-   
    3) Disable Firewall
    4) Windows Patches
-   
+   5) Tools
+
    9) Selfupdate
    10) Logout User
    11) Restart Server/PC
@@ -468,6 +468,10 @@ do {
          }
       }
    }
+   #Tools
+   5 {
+      
+   }
    6{
       
    }
@@ -492,7 +496,6 @@ do {
       switch (readinputrestart) {
          1{
             Restart-Computer
-            waitforenter
          }
       }
    }

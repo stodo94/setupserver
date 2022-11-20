@@ -6,24 +6,10 @@ Setupscript für Windows Server
 With this Setup Script it is possible to install the following Roles and Features with a guided wizard:
 
 Active Directory Services
-1) Active Directory Services
-2) Active Directory Services incl Management
-3) Active Directory Management
-
 DHCP Server
-1) DHCP Service
-2) DHCP Service incl Management
-3) DHCP Management
-
 Printserver
-1) Printserver
-2) Printserver incl Management
-3) Printserver Management Tools Only
-
 DFS 
-1) DFS Replication / DFS Namespace
-2) DFS Replication / DFS Namespace incl Management
-3) DFS Replication / DFS Namespace Management Tools Only
+Group Policy Management
 
 Windows Updates
 1) Search

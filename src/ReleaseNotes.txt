@@ -1,3 +1,7 @@
+v0.3.3:
+- GroupPolicyManagement Tool Installation added (GPMC)
+
+
 v0.3.2:
 - Fixed Main Menu
 

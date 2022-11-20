@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.3.2"
+$actualversion="v0.3.3"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -45,7 +45,7 @@ function readinputroles {
    2) DHCP Server
    3) Printserver
    4) DFS Replication / Namespace
-   5) ...
+   5) Group Policy Management
    6) ...
    7) ...
 
@@ -185,6 +185,19 @@ function readinputrestart {
    
 }
 
+function readinputgpmc (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenu Group Policy Management
+   Do you want to Install GPMC?
+   1) YES
+   0) NO
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
    Invoke-WebRequest -Uri https://download.microsoft.com/download/6/8/8/688FFD30-8FB8-47BC-AD17-0E5467E4E979/adreplstatusInstaller.msi -OutFile C:\service\adreplstatus.msi
@@ -306,6 +319,10 @@ function InstallDFS {
 
 function InstallDFSMgmt {
    Install-WindowsFeature -Name RSAT-DFS-Mgmt-Con   
+}
+
+function InstallGPMC {
+   Install-WindowsFeature -Name GPMC   
 }
 
 function wait {
@@ -434,6 +451,14 @@ do {
                }
                3{
                   InstallDFSMgmt
+                  waitforenter
+               }
+            }
+         }
+         5{
+            switch (readinputgpmc) {
+               1{
+                  InstallGPMC
                   waitforenter
                }
             }

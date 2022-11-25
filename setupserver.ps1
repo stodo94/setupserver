@@ -1,5 +1,5 @@
-$choicemain=$null
-$actualversion="v0.4.0"
+$choicemain = $null
+$actualversion = "v0.4.0"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -13,7 +13,7 @@ New-Item -Path "c:\service\setupserver" -Name "bin" -ItemType "directory" -Error
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-function readinput (){
+function readinput () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
    ----------------------------------------
@@ -32,7 +32,7 @@ function readinput (){
    11) Restart Server/PC
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -50,7 +50,7 @@ function readinputsoftware {
    6) 7zip
 
    7) to continue...'   
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -70,11 +70,11 @@ function readinputroles {
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread   
 }
 
-function readinputad (){
+function readinputad () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
    Submenue Active Directory Services
@@ -85,7 +85,7 @@ function readinputad (){
    
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -100,7 +100,7 @@ function readinputdhcp {
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -115,7 +115,7 @@ function readinputprintserver {
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -130,11 +130,11 @@ function readinputdfs {
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread 
 }
 
-function readinputgpmc (){
+function readinputgpmc () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
    Submenu Group Policy Management
@@ -142,11 +142,11 @@ function readinputgpmc (){
    1) YES
    0) NO
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
-function readinputnps (){
+function readinputnps () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
    Submenue Network Policy Server
@@ -157,13 +157,13 @@ function readinputnps (){
    
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
 
 #Firewall
-function readinputfirewall (){
+function readinputfirewall () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
    Submenu Disable Firewall
@@ -172,7 +172,7 @@ function readinputfirewall (){
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -188,7 +188,7 @@ function readinputwindowspatch {
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -204,9 +204,53 @@ function readinputtools {
 
    0) Cancel
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
+
+#Clean Systemdrive Menu
+function readinput_cleansystemdrive {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Tools - Clean System Drive
+   Choose the following Number
+   1) Clean Old Service Pack Files
+   2)... 
+   3)...
+   4) Automatic Clean with CLEANMGR.EXE
+
+   0) Cancel
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+#Clean Service Pack Files
+function readinput_cleanservicepack {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Tools - Clean Old Service Pack Files
+   Run DISM to Clean Old Service Pack Files?
+   1) YES
+   0) NO
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+function readinput_cleanmgr {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Tools - Run Cleanmgr.exe
+   Run cleanmgr with automatic?
+   1) YES
+   0) NO
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+
 
 function readinputlogoff {
    Clear-Host
@@ -216,7 +260,7 @@ function readinputlogoff {
    0) NO
    1) YES
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
 
@@ -228,7 +272,7 @@ function readinputrestart {
    0) NO
    1) YES
    "
-   $choiceread=Read-Host -Prompt 'Please input Number'
+   $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
    
 }
@@ -276,7 +320,7 @@ function InstallSMBv1 {
 
 
 function DisableFirewall {
-   Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False   
+   Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled False   
 }
 
 function InstallWGet {
@@ -284,14 +328,14 @@ function InstallWGet {
 
    #If the file does not exist, create it.
    if (-not(Test-Path -Path $wgetbin -PathType Leaf)) {
-     try {
-      $ProgressPreference = 'SilentlyContinue'
-      Invoke-WebRequest -Uri https://github.com/webfolderio/wget-windows/releases/download/v1.21.3.june.21.2022/wget-gnutls-x64.exe -OutFile C:\service\setupserver\bin\wget.exe | Out-Null
-      $ProgressPreference = 'Continue'
-     }
-     catch {
+      try {
+         $ProgressPreference = 'SilentlyContinue'
+         Invoke-WebRequest -Uri https://github.com/webfolderio/wget-windows/releases/download/v1.21.3.june.21.2022/wget-gnutls-x64.exe -OutFile C:\service\setupserver\bin\wget.exe | Out-Null
+         $ProgressPreference = 'Continue'
+      }
+      catch {
          throw $_.Exception.Message
-     }
+      }
    }
    # If the file already exists, show the message and do nothing.
    else {   
@@ -307,8 +351,8 @@ function InstallMSEdge {
 function checkversion {
    InstallWGet
    C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/version.csv -q -O C:\service\setupserver\bin\version.csv
-   $version=Import-CSV -Path C:\service\setupserver\bin\version.csv
-   $newversion=$version.Version
+   $version = Import-CSV -Path C:\service\setupserver\bin\version.csv
+   $newversion = $version.Version
    $newversion
    Remove-Item C:\Service\setupserver\bin\version.csv
    if ($newversion -notlike $actualversion) {
@@ -354,7 +398,7 @@ function Install7zip {
 }
 
 function InstallDFS {
-   Install-WindowsFeature -Name FS-DFS-Namespace,FS-DFS-Replication   
+   Install-WindowsFeature -Name FS-DFS-Namespace, FS-DFS-Replication   
 }
 
 function InstallDFSMgmt {
@@ -382,17 +426,20 @@ function waitforenter {
    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');   
 }
 
-function dism_cleanservicepack {
-   
+function fu_dism_cleanservicepack {
+   DISM /online /Cleanup-Image /SpSuperseded
 }
-function dism_analzyze {
-   
+function fu_dism_analzyze {
+   dism /Online /Cleanup-Image /AnalyzeComponentStore
 }
-function dism_stcomclean {
-   
+function fu_dism_stcomclean {
+   dism /online /Cleanup-Image /StartComponentCleanup
 }
 function fu_diskclean {
-   
+   cleanmgr.exe /AUTOCLEAN
+   Wait-Process -Name cleanmgr
+   cleanmgr.exe /VERYLOWDISK
+   Wait-Process -Name cleanmgr
 }
 
 
@@ -401,215 +448,235 @@ waitforenter
 
 do {
    switch (readinput) {
-   # Abbruch
-   0 {
-      Break mylabel
-   }
-   # Software
-   1 {
-      switch(readinputsoftware) {
-         #ActiveDirectory Health Tool
-         1{
-            Write-Host -ForegroundColor Red "  Not functional at the Moment"
-            Write-Host -ForegroundColor Red "  Microsoft is having issues at the Moment"
-            Write-Host -ForegroundColor Red "  If Microsoft will fix it, the Installation"
-            Write-Host -ForegroundColor Red "  will be available"
-            waitforenter
-         }
-         #MS Edge Setup
-         2{ 
-            InstallMSEdge
-            waitforenter
-         }
-         # Download SQL Express 2019
-         3{
-            downloadsqlexpress
-            waitforenter
-         }
-         #Download and Install SQL Managment Studio
-         4{
-            installssms
-            waitforenter
-         }
-         #Download and Install .net 4.8
-         5{
-            InstallDotNet48
-            waitforenter
-         }
-         #Download and Install 7zip
-         6{
-            Install7zip
-            waitforenter
-         }
+      # Abbruch
+      0 {
+         Break mylabel
       }
-   }
-   #Windows Server Roles / Features
-   2 { 
-      switch (readinputroles) {
-         #Active Directory
-         1{
-            switch (readinputad) {
-               1 {
-                  InstallADServices
-                  waitforenter
-               }
-               2 {
-                  InstallADServices
-                  InstallADManagement
-                  waitforenter
-               }
-               3 {
-                  InstallADManagement
-                  waitforenter
-               }
+      # Software
+      1 {
+         switch (readinputsoftware) {
+            #ActiveDirectory Health Tool
+            1 {
+               Write-Host -ForegroundColor Red "  Not functional at the Moment"
+               Write-Host -ForegroundColor Red "  Microsoft is having issues at the Moment"
+               Write-Host -ForegroundColor Red "  If Microsoft will fix it, the Installation"
+               Write-Host -ForegroundColor Red "  will be available"
+               waitforenter
             }
-         }
-         #DHCPServer
-         2{
-            switch (readinputdhcp) {
-               1 {
-                  InstallDHCP
-                  waitforenter
-               }
-               2 {
-                  InstallDHCP
-                  InstallDHCPManagement
-                  waitforenter
-               }
-               3 {
-                  InstallDHCPManagement
-                  waitforenter
-               }
+            #MS Edge Setup
+            2 { 
+               InstallMSEdge
+               waitforenter
             }
-         }
-         #Printserver
-         3{
-            switch (readinputprintserver) {
-               1{
-                  InstallPrintserver
-                  waitforenter
-               }
-               2{
-                  InstallPrintserver
-                  InstallPrintMgmt
-                  waitforenter
-               }
-               3{
-                  InstallPrintMgmt
-                  waitforenter
-               }
+            # Download SQL Express 2019
+            3 {
+               downloadsqlexpress
+               waitforenter
             }
-         }
-         #DFS Replicaton
-         4{
-            switch (readinputdfs) {
-               1{
-                  InstallDFS
-                  waitforenter
-               }
-               2{
-                  InstallDFS
-                  InstallDFSMgmt
-                  waitforenter
-               }
-               3{
-                  InstallDFSMgmt
-                  waitforenter
-               }
+            #Download and Install SQL Managment Studio
+            4 {
+               installssms
+               waitforenter
             }
-         }
-         #GPMC Console
-         5{
-            switch (readinputgpmc) {
-               1{
-                  InstallGPMC
-                  waitforenter
-               }
+            #Download and Install .net 4.8
+            5 {
+               InstallDotNet48
+               waitforenter
             }
-         }
-         #NPS Server
-         6{
-            switch (readinputnps) {
-               1{
-                  InstallNPS
-                  waitforenter
-               }
-               2{
-                  InstallNPS
-                  InstallNPSMgmt
-                  waitforenter
-               }
-               3{
-                  InstallNPSMgmt
-                  waitforenter
-               }
+            #Download and Install 7zip
+            6 {
+               Install7zip
+               waitforenter
             }
          }
       }
+      #Windows Server Roles / Features
+      2 { 
+         switch (readinputroles) {
+            #Active Directory
+            1 {
+               switch (readinputad) {
+                  1 {
+                     InstallADServices
+                     waitforenter
+                  }
+                  2 {
+                     InstallADServices
+                     InstallADManagement
+                     waitforenter
+                  }
+                  3 {
+                     InstallADManagement
+                     waitforenter
+                  }
+               }
+            }
+            #DHCPServer
+            2 {
+               switch (readinputdhcp) {
+                  1 {
+                     InstallDHCP
+                     waitforenter
+                  }
+                  2 {
+                     InstallDHCP
+                     InstallDHCPManagement
+                     waitforenter
+                  }
+                  3 {
+                     InstallDHCPManagement
+                     waitforenter
+                  }
+               }
+            }
+            #Printserver
+            3 {
+               switch (readinputprintserver) {
+                  1 {
+                     InstallPrintserver
+                     waitforenter
+                  }
+                  2 {
+                     InstallPrintserver
+                     InstallPrintMgmt
+                     waitforenter
+                  }
+                  3 {
+                     InstallPrintMgmt
+                     waitforenter
+                  }
+               }
+            }
+            #DFS Replicaton
+            4 {
+               switch (readinputdfs) {
+                  1 {
+                     InstallDFS
+                     waitforenter
+                  }
+                  2 {
+                     InstallDFS
+                     InstallDFSMgmt
+                     waitforenter
+                  }
+                  3 {
+                     InstallDFSMgmt
+                     waitforenter
+                  }
+               }
+            }
+            #GPMC Console
+            5 {
+               switch (readinputgpmc) {
+                  1 {
+                     InstallGPMC
+                     waitforenter
+                  }
+               }
+            }
+            #NPS Server
+            6 {
+               switch (readinputnps) {
+                  1 {
+                     InstallNPS
+                     waitforenter
+                  }
+                  2 {
+                     InstallNPS
+                     InstallNPSMgmt
+                     waitforenter
+                  }
+                  3 {
+                     InstallNPSMgmt
+                     waitforenter
+                  }
+               }
+            }
+         }
        
-   }
-   #Disable Firewall
-   3{
-      switch (readinputfirewall) {
-         1 {
-            DisableFirewall
-            waitforenter
-         }
-      } 
-   }
-   #Windows Updates
-   4{
-      switch (readinputwindowspatch) {
-         1 {
-            Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-            Install-Module PSWindowsUpdate -Force -SkipPublisherCheck
-            waitforenter
-         }
-         2 {
-            Get-WindowsUpdate -NotCategory 'Drivers' | Format-Table
-            waitforenter
-         }
-         3 {
-            Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot -NotCategory 'Drivers' | Format-Table
-            waitforenter
+      }
+      #Disable Firewall
+      3 {
+         switch (readinputfirewall) {
+            1 {
+               DisableFirewall
+               waitforenter
+            }
+         } 
+      }
+      #Windows Updates
+      4 {
+         switch (readinputwindowspatch) {
+            1 {
+               Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
+               Install-Module PSWindowsUpdate -Force -SkipPublisherCheck
+               waitforenter
+            }
+            2 {
+               Get-WindowsUpdate -NotCategory 'Drivers' | Format-Table
+               waitforenter
+            }
+            3 {
+               Install-WindowsUpdate -AcceptAll -Install -IgnoreReboot -NotCategory 'Drivers' | Format-Table
+               waitforenter
+            }
          }
       }
-   }
-   #Tools
-   5 {
-      switch (readinputtools) {
-         #Clean Systemdrive
-         1 {
-
+      #Tools
+      5 {
+         switch (readinputtools) {
+            1 {
+         
+               #Clean Systemdrive
+         
+               # Clean Old Servicepack Files
+               switch (readinput_cleansystemdrive) {
+                  1 {
+                     switch (readinput_cleanservicepack) {
+                        1 {
+                           fu_dism_cleanservicepack
+                           waitforenter
+                        }
+                     }
+                  }
+                  4{
+                     switch (readinput_cleanmgr) {
+                        1 {
+                           fu_diskclean
+                           waitforenter
+                        }
+                     }
+                  }
+               }         
+            } 
          }
       }
-   }
-   6{
+      6 {
       
-   }
-   7{
+      }
+      7 {
       
-   }
-   #Selfupdate
-   9 {
-      checkversion
-      waitforenter
-   }
-   #Logoff Current User
-   10 {
-      switch (readinputlogoff) {
-         1{
-            logoff.exe
+      }
+      #Selfupdate
+      9 {
+         checkversion
+         waitforenter
+      }
+      #Logoff Current User
+      10 {
+         switch (readinputlogoff) {
+            1 {
+               logoff.exe
+            }
+         }
+      }
+      #Restart Server / Computer
+      11 {
+         switch (readinputrestart) {
+            1 {
+               Restart-Computer
+            }
          }
       }
    }
-   #Restart Server / Computer
-   11 {
-      switch (readinputrestart) {
-         1{
-            Restart-Computer
-         }
-      }
-   }
-   }
-} until ($choicemain-eq 0)
+} until ($choicemain -eq 0)

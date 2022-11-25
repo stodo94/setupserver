@@ -1,5 +1,5 @@
 $choicemain=$null
-$actualversion="v0.3.3"
+$actualversion="v0.4.0"
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -36,6 +36,25 @@ function readinput (){
    return $choiceread
 }
 
+#Software
+function readinputsoftware {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object '
+   Submenu Software
+   Choose the following Number
+   1) Active Directory Health Tool
+   2) Microsoft Edge
+   3) Download SQL Express 2019
+   4) SQL Management Studio
+   5) .net Framework 4.8
+   6) 7zip
+
+   7) to continue...'   
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+#Active Directory Roles und Features
 function readinputroles {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -70,34 +89,6 @@ function readinputad (){
    return $choiceread
 }
 
-function readinputnps (){
-   Clear-Host
-   Write-Host -ForegroundColor Yellow -Object "
-   Submenue Network Policy Server
-   Choose the following Number
-   1) Network Policy Server
-   2) Network Policy Server incl Management
-   3) Network Policy Server Management only
-   
-   0) Cancel
-   "
-   $choiceread=Read-Host -Prompt 'Please input Number'
-   return $choiceread
-}
-
-function readinputfirewall (){
-   Clear-Host
-   Write-Host -ForegroundColor Yellow -Object "
-   Submenu Disable Firewall
-   Are you sure?
-   1) YES
-
-   0) Cancel
-   "
-   $choiceread=Read-Host -Prompt 'Please input Number'
-   return $choiceread
-}
-
 function readinputdhcp {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -106,38 +97,6 @@ function readinputdhcp {
    1) DHCP Service
    2) DHCP Service incl Management
    3) DHCP Management
-
-   0) Cancel
-   "
-   $choiceread=Read-Host -Prompt 'Please input Number'
-   return $choiceread
-}
-
-function readinputsoftware {
-   Clear-Host
-   Write-Host -ForegroundColor Yellow -Object '
-   Submenu Software
-   Choose the following Number
-   1) Active Directory Health Tool
-   2) Microsoft Edge
-   3) Download SQL Express 2019
-   4) SQL Management Studio
-   5) .net Framework 4.8
-   6) 7zip
-
-   7) to continue...'   
-   $choiceread=Read-Host -Prompt 'Please input Number'
-   return $choiceread
-}
-
-function readinputwindowspatch {
-   Clear-Host
-   Write-Host -ForegroundColor Yellow -Object "
-   Submenue Windows Patches
-   Choose the following Number
-   1) Install Windows Patch Management Tools (required once)
-   2) Search for Windows Updates
-   3) Install Windows Updates
 
    0) Cancel
    "
@@ -175,6 +134,80 @@ function readinputdfs {
    return $choiceread 
 }
 
+function readinputgpmc (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenu Group Policy Management
+   Do you want to Install GPMC?
+   1) YES
+   0) NO
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+function readinputnps (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Network Policy Server
+   Choose the following Number
+   1) Network Policy Server
+   2) Network Policy Server incl Management
+   3) Network Policy Server Management only
+   
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+
+#Firewall
+function readinputfirewall (){
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenu Disable Firewall
+   Are you sure?
+   1) YES
+
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+#Windows Patches
+function readinputwindowspatch {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Windows Patches
+   Choose the following Number
+   1) Install Windows Patch Management Tools (required once)
+   2) Search for Windows Updates
+   3) Install Windows Updates
+
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+#Tools
+function readinputtools {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Tools
+   Choose the following Number
+   1) Clean System Drive
+   2) ...
+   3) ...
+
+   0) Cancel
+   "
+   $choiceread=Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
 function readinputlogoff {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -200,19 +233,11 @@ function readinputrestart {
    
 }
 
-function readinputgpmc (){
-   Clear-Host
-   Write-Host -ForegroundColor Yellow -Object "
-   Submenu Group Policy Management
-   Do you want to Install GPMC?
-   1) YES
-   0) NO
-   "
-   $choiceread=Read-Host -Prompt 'Please input Number'
-   return $choiceread
-}
 
 
+
+
+# Module / Funktionen
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
    Invoke-WebRequest -Uri https://download.microsoft.com/download/6/8/8/688FFD30-8FB8-47BC-AD17-0E5467E4E979/adreplstatusInstaller.msi -OutFile C:\service\adreplstatus.msi
@@ -357,6 +382,21 @@ function waitforenter {
    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');   
 }
 
+function dism_cleanservicepack {
+   
+}
+function dism_analzyze {
+   
+}
+function dism_stcomclean {
+   
+}
+function fu_diskclean {
+   
+}
+
+
+#UserFrontend
 waitforenter
 
 do {
@@ -377,7 +417,7 @@ do {
             waitforenter
          }
          #MS Edge Setup
-         2{
+         2{ 
             InstallMSEdge
             waitforenter
          }
@@ -537,7 +577,12 @@ do {
    }
    #Tools
    5 {
-      
+      switch (readinputtools) {
+         #Clean Systemdrive
+         1 {
+
+         }
+      }
    }
    6{
       

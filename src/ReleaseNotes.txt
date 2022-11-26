@@ -2,6 +2,8 @@ v0.4.0:
 -Added Tool DISM Cleanup
 -Added Tool to run cleanmgr.exe
 -Added Information to Main Menu
+-Added Manual Folder
+-Added Manual for Cleansystemdrive
 
 v0.3.3:
 - GroupPolicyManagement Tool Installation added (GPMC)

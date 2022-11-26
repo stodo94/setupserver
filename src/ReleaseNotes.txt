@@ -1,5 +1,7 @@
 v0.4.0:
--Added Tool DISM Cleanup - in Progress
+-Added Tool DISM Cleanup
+-Added Tool to run cleanmgr.exe
+-Added Information to Main Menu
 
 v0.3.3:
 - GroupPolicyManagement Tool Installation added (GPMC)

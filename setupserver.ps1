@@ -13,11 +13,20 @@ New-Item -Path "c:\service\setupserver" -Name "bin" -ItemType "directory" -Error
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+#Variables
+$HOSTCOMPLETE = Get-WmiObject -Namespace root\cimv2 -Class Win32_ComputerSystem | Select-Object Name, Domain
+$var_hostname = $HOSTCOMPLETE.Name
+$var_domain = $HOSTCOMPLETE.Domain
+$HOSTIP = Get-NetIPConfiguration | Where-Object {$_.IPv4DefaultGateway -ne $null -and $_.NetAdapter.Status -ne "Disconnected"}
+$ipaddress = $HOSTIP.IPv4Address.IPAddress
+
 function readinput () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
    ----------------------------------------
-   Server Hostname: $env:computername
+   Server Hostname:  $var_hostname
+   Server Domain:    $var_domain
+   Server IP:        $ipaddress
    ----------------------------------------
    Main Menu
    Choose from the following Number
@@ -49,7 +58,7 @@ function readinputsoftware {
    5) .net Framework 4.8
    6) 7zip
 
-   7) to continue...'   
+   0) to continue...'   
    $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread
 }
@@ -215,8 +224,8 @@ function readinput_cleansystemdrive {
    Submenue Tools - Clean System Drive
    Choose the following Number
    1) Clean Old Service Pack Files
-   2)... 
-   3)...
+   2) DISM AnalyzeComponentstore
+   3) DISM StartComponentCleanup
    4) Automatic Clean with CLEANMGR.EXE
 
    0) Cancel
@@ -238,6 +247,33 @@ function readinput_cleanservicepack {
    return $choiceread
 }
 
+# DISM AnalyzeComponentstore
+function readinput_analyze {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Tools - DISM AnalyzeComponentStore
+   Run DISM AnalyzeComponentStore?
+   1) YES
+   0) NO
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+# DISM StartComponentCleanup
+
+function readinput_stcomclean{
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Tools - DISM StartComponentCleanup
+   Run DISM StartComponentCleanup?
+   1) YES
+   0) NO
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+}
+
+#Clean with cleanmgr.exe
 function readinput_cleanmgr {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -626,11 +662,9 @@ do {
       5 {
          switch (readinputtools) {
             1 {
-         
                #Clean Systemdrive
-         
-               # Clean Old Servicepack Files
                switch (readinput_cleansystemdrive) {
+                  #Clean Old Servicepack Files
                   1 {
                      switch (readinput_cleanservicepack) {
                         1 {
@@ -639,6 +673,25 @@ do {
                         }
                      }
                   }
+                  # DISM AnalyzeComponentStore
+                  2{
+                     switch (readinput_analyze) {
+                        1 {
+                           fu_dism_analzyze
+                           waitforenter
+                        }
+                     }
+                  }
+                  # DISM StartComponentCleanup
+                  3{
+                     switch (readinput_stcomclean) {
+                        1{
+                           fu_dism_stcomclean
+                           waitforenter
+                        }
+                     }
+                  }
+                  #Clean with cleanmgr.exe
                   4{
                      switch (readinput_cleanmgr) {
                         1 {

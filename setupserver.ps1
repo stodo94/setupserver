@@ -13,7 +13,7 @@ New-Item -Path "c:\service\setupserver" -Name "bin" -ItemType "directory" -Error
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-#Variables for Script
+#Variables for Script2
 $HOSTCOMPLETE = Get-WmiObject -Namespace root\cimv2 -Class Win32_ComputerSystem | Select-Object Name, Domain
 $var_hostname = $HOSTCOMPLETE.Name
 $var_domain = $HOSTCOMPLETE.Domain

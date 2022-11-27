@@ -209,7 +209,7 @@ function readinputtools {
    Choose the following Number
    1) Clean System Drive
    2) Get-DHCP Leases (DHCP-RSAT Tools must be Installed)
-      Get them from Main Menu 2-2-3
+      Get them from Main Menu 2-2-3 (in Progress)
    3) ...
 
    0) Cancel

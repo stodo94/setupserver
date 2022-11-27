@@ -208,7 +208,8 @@ function readinputtools {
    Submenue Tools
    Choose the following Number
    1) Clean System Drive
-   2) ...
+   2) Get-DHCP Leases (DHCP-RSAT Tools must be Installed)
+      Get them from Main Menu 2-2-3
    3) ...
 
    0) Cancel
@@ -478,6 +479,9 @@ function fu_diskclean {
    Wait-Process -Name cleanmgr
 }
 
+function fu_getalldhcpleases {
+   Get-DhcpServerv4Scope | Get-DhcpServerv4Lease | Sort-Object Hostname
+}
 
 #UserFrontend
 waitforenter

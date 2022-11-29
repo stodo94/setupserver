@@ -35,6 +35,7 @@ function readinput () {
    3) Disable Firewall
    4) Windows Patches
    5) Tools
+   6) Community (to be anounced)
 
    9) Selfupdate
    10) Logout User
@@ -407,7 +408,7 @@ function checkversion {
 
 function downloadsqlexpress {
    #Write-Host -ForegroundColor Yellow "  Development in Progress"
-   Write-Host -ForegroundColor Blue -Object "  Download Path C:\Service\SQL2019Express"
+   Write-Host -ForegroundColor Cyan -Object "  Download Path C:\Service\SQL2019Express"
    waitforenter
    InstallWGet
    New-Item -Path "c:\Service" -Name "SQL2019Express" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null

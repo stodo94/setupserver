@@ -425,6 +425,7 @@ function InstallDotNet48 {
    InstallWGet
    C:\Service\setupserver\bin\wget.exe https://go.microsoft.com/fwlink/?linkid=2088631 -q -O C:\service\setupserver\bin\dotnet48.exe --show-progress
    C:\Service\setupserver\bin\dotnet48.exe /q /norestart
+   Wait-Process -Name dotnet48
    Write-Host -ForegroundColor Green "  Reboot and Windows Updates recommended"
    Start-Sleep -Seconds 6
 }

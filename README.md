@@ -23,6 +23,9 @@ The Following Software can be installed directly with this script:
 4) SQL Express 2019 (Download only)
 5) SQL Management Studio
 
+Tools:
+1 ) Clean Systemdrive
+
 Furthermore the Windows Firewall can be disabled
 
 Since Version v0.0.4 the Script provides a self update function

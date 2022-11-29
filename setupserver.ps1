@@ -398,7 +398,7 @@ function checkversion {
       #Write-Host -ForegroundColor Red "Please Load Newest Release"
       wait
       Set-Variable -Name choicemain -Value "0" -Scope 1
-      Write-Host -ForegroundColor Red "Update Downloaded Run From C:\Service\setupserver"
+      Write-Host -ForegroundColor Cyan "Update Downloaded Run From C:\Service\setupserver"
       Start-Sleep -Seconds 10
    }
    else {

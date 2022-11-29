@@ -379,11 +379,11 @@ function InstallWGet {
    else {   
    }
 }
-
+# // Wait to finish @stodo #1194
 function InstallMSEdge {
    InstallWGet
    C:\service\setupserver\bin\wget.exe http://go.microsoft.com/fwlink/?LinkID=2093437 -q --show-progress -O C:\service\setupserver\bin\edgex64.msi
-   Msiexec.exe /i C:\service\setupserver\bin\edgex64.msi /qn
+   Start-Process msiexec.exe -Wait -ArgumentList '/i C:\service\setupserver\bin\edgex64.msi /qn'
 }
 
 function checkversion {

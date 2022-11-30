@@ -316,10 +316,6 @@ function readinputrestart {
    
 }
 
-
-
-
-
 # Module / Funktionen
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null

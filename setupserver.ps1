@@ -418,7 +418,7 @@ function downloadsqlexpress {
 function installssms {
    InstallWGet
    C:\service\setupserver\bin\wget.exe https://aka.ms/ssmsfullsetup -q --show-progress -O C:\Service\setupserver\bin\smssfull.exe
-   C:\Service\setupserver\bin\smssfull.exe /install /quiet /norestart
+   Start-Process 'C:\Service\setupserver\bin\smssfull.exe' -Wait -ArgumentList '/install /quiet /norestart'
 }
 
 function InstallDotNet48 {

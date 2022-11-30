@@ -6,6 +6,7 @@ Server SetupScript by Stefan Becker
 Please use Numbers to get trough the menu
 
 Version: $actualversion
+Loading, please Wait....
 "
 New-Item -Path "c:\" -Name "Service" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null
 New-Item -Path "c:\Service" -Name "setupserver" -ItemType "directory" -ErrorAction SilentlyContinue | Out-Null

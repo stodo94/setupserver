@@ -430,7 +430,7 @@ function InstallDotNet48 {
 function Install7zip {
    InstallWGet
    C:\Service\setupserver\bin\wget.exe https://7-zip.org/a/7z2201-x64.msi -q -P C:\Service\setupserver\bin --show-progress  --no-check-certificate
-   msiexec.exe /I C:\Service\setupserver\bin\7z2201-x64.msi /qn   
+   Start-Process 'msiexec.exe' -Wait -ArgumentList '/I C:\Service\setupserver\bin\7z2201-x64.msi /qn'
 }
 
 function InstallDFS {

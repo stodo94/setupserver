@@ -3,7 +3,6 @@ $actualversion = "v0.4.0"
 
 #Check for Elevated Rights
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
-$amiadmin
 
 if ($amiadmin -eq $false) {
 Clear-Host
@@ -13,10 +12,10 @@ You are using without Admin Rights
 Some Commands and Functions will not work
 ...
 "
-}
-
 Write-Host -ForegroundColor Green -NoNewLine 'Press any key to continue...';
-   $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); 
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); 
+
+}
 
 Clear-Host
 write-host -ForegroundColor Green "

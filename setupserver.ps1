@@ -4,7 +4,16 @@ $actualversion = "v0.4.0"
 #Check for Elevated Rights
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
 
-
+if ($amiadmin == False) {
+Clear-Host
+write-host -ForegroundColor Red "
+Server SetupScript by Stefan Becker
+You are using without Admin Rights
+Some Commands and Functions will not work
+...
+"
+waitforenter
+}
 
 Clear-Host
 write-host -ForegroundColor Green "

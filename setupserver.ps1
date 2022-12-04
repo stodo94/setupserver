@@ -1,5 +1,20 @@
 $choicemain = $null
 $actualversion = "v0.4.0"
+
+#Check for Elevated Rights
+$amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
+
+if ($amiadmin -eq $false) {
+Clear-Host
+write-host -ForegroundColor Red "
+Server SetupScript by Stefan Becker
+You are using without Admin Rights
+Some Commands and Functions will not work
+..."
+Write-Host -ForegroundColor Green -NoNewLine 'Press any key to continue...';
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); 
+}
+
 Clear-Host
 write-host -ForegroundColor Green "
 Server SetupScript by Stefan Becker
@@ -20,6 +35,7 @@ $var_hostname = $HOSTCOMPLETE.Name
 $var_domain = $HOSTCOMPLETE.Domain
 $HOSTIP = Get-NetIPConfiguration | Where-Object {$_.IPv4DefaultGateway -ne $null -and $_.NetAdapter.Status -ne "Disconnected"}
 $ipaddress = $HOSTIP.IPv4Address.IPAddress
+
 
 function readinput () {
    Clear-Host

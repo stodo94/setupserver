@@ -5,7 +5,7 @@ $actualversion = "v0.4.0"
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
 $amiadmin
 
-if ($amiadmin = False) {
+if ($amiadmin -eq 'False') {
 Clear-Host
 write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker

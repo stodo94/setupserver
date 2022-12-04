@@ -13,8 +13,10 @@ You are using without Admin Rights
 Some Commands and Functions will not work
 ...
 "
-waitforenter
 }
+
+Write-Host -ForegroundColor Green -NoNewLine 'Press any key to continue...';
+   $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); 
 
 Clear-Host
 write-host -ForegroundColor Green "

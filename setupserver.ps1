@@ -10,11 +10,9 @@ write-host -ForegroundColor Red "
 Server SetupScript by Stefan Becker
 You are using without Admin Rights
 Some Commands and Functions will not work
-...
-"
+..."
 Write-Host -ForegroundColor Green -NoNewLine 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); 
-
 }
 
 Clear-Host

@@ -336,7 +336,7 @@ function readinputrestart {
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
    Invoke-WebRequest -Uri https://download.microsoft.com/download/6/8/8/688FFD30-8FB8-47BC-AD17-0E5467E4E979/adreplstatusInstaller.msi -OutFile C:\service\adreplstatus.msi
-   Msiexec.exe /I C:\service\adreplstatus.msi   
+   Start-Process 'msiexec.exe' -Wait -ArgumentList '/I C:\service\adreplstatus.msi /qn'
 }
 
 function InstallADServices {

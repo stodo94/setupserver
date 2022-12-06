@@ -1,4 +1,13 @@
 Systemdrive Cleanup contains 4 Important Modules
 
-To get the best result the step should be performed in the order like the order from the Menu
+1) Clean Old Service Pack Files
+    DISM /online /Cleanup-Image /SpSuperseded
+2) DISM AnalyzeComponentstore
+    dism /Online /Cleanup-Image /AnalyzeComponentStore
+3) DISM StartComponentCleanup
+    dism /online /Cleanup-Image /StartComponentCleanup
+4) Automatic Clean with CLEANMGR.EXE
+    cleanmgr.exe /AUTOCLEAN
+    cleanmgr.exe /VERYLOWDISK
 
+To get the best result the step should be performed in the order like the order from the Menu

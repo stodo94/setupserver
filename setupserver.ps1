@@ -1,5 +1,5 @@
 $choicemain = $null
-$actualversion = "v0.4.0"
+$actualversion = "v0.4.1"
 
 #Check for Elevated Rights
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")

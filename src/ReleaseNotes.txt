@@ -1,3 +1,8 @@
+v0.4.1:
+-Check for Elevated Rights
+-Wait for Install Process in diffrent functions
+-Bug Fixes
+
 v0.4.0:
 -Added Tool DISM Cleanup
 -Added Tool to run cleanmgr.exe

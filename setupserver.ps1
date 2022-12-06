@@ -486,10 +486,10 @@ function fu_dism_stcomclean {
    dism /online /Cleanup-Image /StartComponentCleanup
 }
 function fu_diskclean {
-   cleanmgr.exe /AUTOCLEAN
-   Wait-Process -Name cleanmgr
-   cleanmgr.exe /VERYLOWDISK
-   Wait-Process -Name cleanmgr
+   write-host -ForegroundColor Green "Cleanup Will be processed please wait
+   "
+   Start-Process 'cleanmgr.exe' -Wait -ArgumentList '/AUTOCLEAN'
+   Start-Process 'cleanmgr.exe' -Wait -ArgumentList '/VERYLOWDISK'
 }
 
 function fu_getalldhcpleases {

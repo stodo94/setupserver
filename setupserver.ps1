@@ -61,6 +61,7 @@ function readinput () {
    9) Selfupdate
    10) Logout User
    11) Restart Server/PC
+   12) Settings
    0) Cancel
    "
    $choiceread = Read-Host -Prompt 'Please input Number'
@@ -330,6 +331,21 @@ function readinputrestart {
    Do You Want To Restart Now
    0) NO
    1) YES
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+   
+}
+
+#12 Settings
+function readinput_settings {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Settings
+   Following Settings can be changed
+   1) Download Path
+   
+   0) Cancel
    "
    $choiceread = Read-Host -Prompt 'Please input Number'
    return $choiceread

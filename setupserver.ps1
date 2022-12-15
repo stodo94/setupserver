@@ -809,10 +809,13 @@ do {
             }
          }
       }
+      # Settings
       12 {
          switch (readinput_settings) {
+            # Settings Download Path
             1 {
                switch (readinput_settingsdlpath) {
+                  #Set New download Path
                   1 {
                      $settings_dlpath = set_settingsdlpath
                      $settings.dlpath = $settings_dlpath

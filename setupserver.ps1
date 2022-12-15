@@ -1,10 +1,6 @@
 $choicemain = $null
 $actualversion = "v0.4.1"
 
-#Settings Block
-$settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv -Delimiter ";"
-$settings_dlpath = $settings.dlpath
-
 #Check for Elevated Rights
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
 
@@ -545,6 +541,24 @@ function fu_getalldhcpleases {
 
 #UserFrontend
 waitforenter
+
+if (-not(Test-Path -Path "C:\service\setupserver\bin\settings.csv" -PathType Leaf)) {
+   try {
+      $ProgressPreference = 'SilentlyContinue'
+      C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/settings.csv -q -O C:\service\setupserver\bin\settings.csv
+      $ProgressPreference = 'Continue'
+   }
+   catch {
+      throw $_.Exception.Message
+   }
+}
+# If the file already exists, show the message and do nothing.
+else {   
+}
+
+#Settings Block
+$settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv -Delimiter ";"
+$settings_dlpath = $settings.dlpath
 
 do {
    switch (readinput) {

@@ -359,11 +359,23 @@ function readinput_settingsdlpath {
    Submenue Settings - Download Path
    Following Download Path is configured
    $settings_dlpath
-   $settings_test2
-
+   
+   1) Change Download Path
    0) Cancel
    "
    $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+   
+}
+
+function set_settingsdlpath {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Settings - Download Path Set
+   Enter New Path:
+
+   "
+   $choiceread = Read-Host
    return $choiceread
    
 }
@@ -789,6 +801,8 @@ do {
             1 {
                switch (readinput_settingsdlpath) {
                   1 {
+                     set_settingsdlpath (newpath)
+                     $newpath
                      waitforenter
                   }
                }

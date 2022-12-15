@@ -3,6 +3,7 @@ $actualversion = "v0.4.1"
 
 #Settings Block
 $settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv -Delimiter ";"
+$settings_dlpath = $settings.dlpath
 
 #Check for Elevated Rights
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
@@ -356,7 +357,7 @@ function readinput_settingsdlpath {
    Write-Host -ForegroundColor Yellow -Object "
    Submenue Settings - Download Path
    Following Download Path is configured
-   $settings.dlpath
+   $settings_dlpath
    
    1) Change Download Path
    0) Cancel
@@ -799,7 +800,8 @@ do {
             1 {
                switch (readinput_settingsdlpath) {
                   1 {
-                     $settings.dlpath = set_settingsdlpath
+                     $settings_dlpath = set_settingsdlpath
+                     $settings.dlpath = $settings_dlpath
                      Export-Csv -InputObject $settings -Path C:\Service\setupserver\bin\settings.csv -Delimiter ";"
                      waitforenter
                   }

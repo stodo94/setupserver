@@ -802,7 +802,8 @@ do {
                switch (readinput_settingsdlpath) {
                   1 {
                      $newpath = set_settingsdlpath
-                     $newpath
+                     $settings.dlpath = $newpath
+                     Export-Csv -InputObject $settings -Path C:\Service\setupserver\bin\settings.csv
                      waitforenter
                   }
                }

@@ -352,6 +352,20 @@ function readinput_settings {
    
 }
 
+function readinput_settingsdlpath {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Settings - Download Path
+   Following Download Path is configured
+   $settings_dlpath
+   
+   0) Cancel
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+   
+}
+
 # Module / Funktionen
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
@@ -765,6 +779,17 @@ do {
          switch (readinputrestart) {
             1 {
                Restart-Computer
+            }
+         }
+      }
+      12 {
+         switch (readinput_settings) {
+            1 {
+               switch (readinput_settingsdlpath) {
+                  1 {
+                     waitforenter
+                  }
+               }
             }
          }
       }

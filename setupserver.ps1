@@ -801,8 +801,7 @@ do {
             1 {
                switch (readinput_settingsdlpath) {
                   1 {
-                     set_settingsdlpath (newpath)
-                     $newpath
+                     $newpath = set_settingsdlpath
                      waitforenter
                   }
                }

@@ -2,7 +2,7 @@ $choicemain = $null
 $actualversion = "v0.4.1"
 
 #Settings Block
-$settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv
+$settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv -Delimiter ";"
 $settings_dlpath = $settings.dlpath
 $settings_test2 = $settings.test2
 
@@ -360,7 +360,7 @@ function readinput_settingsdlpath {
    Following Download Path is configured
    $settings_dlpath
    $settings_test2
-   
+
    0) Cancel
    "
    $choiceread = Read-Host -Prompt 'Please input Number'

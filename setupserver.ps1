@@ -4,6 +4,7 @@ $actualversion = "v0.4.1"
 #Settings Block
 $settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv
 $settings_dlpath = $settings.dlpath
+$settings_test2 = $settings.test2
 
 #Check for Elevated Rights
 $amiadmin=[bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
@@ -358,6 +359,7 @@ function readinput_settingsdlpath {
    Submenue Settings - Download Path
    Following Download Path is configured
    $settings_dlpath
+   $settings_test2
    
    0) Cancel
    "

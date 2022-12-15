@@ -57,6 +57,7 @@ function readinput () {
    9) Selfupdate
    10) Logout User
    11) Restart Server/PC
+   12) Settings
    0) Cancel
    "
    $choiceread = Read-Host -Prompt 'Please input Number'
@@ -332,6 +333,48 @@ function readinputrestart {
    
 }
 
+#12 Settings
+function readinput_settings {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Settings
+   Following Settings can be changed
+   1) Download Path
+   
+   0) Cancel
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+   
+}
+
+function readinput_settingsdlpath {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Settings - Download Path
+   Following Download Path is configured
+   $settings_dlpath
+   
+   1) Change Download Path
+   0) Cancel
+   "
+   $choiceread = Read-Host -Prompt 'Please input Number'
+   return $choiceread
+   
+}
+
+function set_settingsdlpath {
+   Clear-Host
+   Write-Host -ForegroundColor Yellow -Object "
+   Submenue Settings - Download Path Set
+   Enter New Path:
+
+   "
+   $choiceread = Read-Host
+   return $choiceread
+   
+}
+
 # Module / Funktionen
 function InstallAdHealth {
    New-Item -Path "c:\" -Name "Service" -ItemType "directory" | Out-Null
@@ -498,6 +541,24 @@ function fu_getalldhcpleases {
 
 #UserFrontend
 waitforenter
+
+if (-not(Test-Path -Path "C:\service\setupserver\bin\settings.csv" -PathType Leaf)) {
+   try {
+      $ProgressPreference = 'SilentlyContinue'
+      C:\service\setupserver\bin\wget.exe https://raw.githubusercontent.com/stodo94/setupserver/main/src/settings.csv -q -O C:\service\setupserver\bin\settings.csv
+      $ProgressPreference = 'Continue'
+   }
+   catch {
+      throw $_.Exception.Message
+   }
+}
+# If the file already exists, show the message and do nothing.
+else {   
+}
+
+#Settings Block
+$settings = Import-CSV -Path C:\service\setupserver\bin\settings.csv -Delimiter ";"
+$settings_dlpath = $settings.dlpath
 
 do {
    switch (readinput) {
@@ -745,6 +806,23 @@ do {
          switch (readinputrestart) {
             1 {
                Restart-Computer
+            }
+         }
+      }
+      # Settings
+      12 {
+         switch (readinput_settings) {
+            # Settings Download Path
+            1 {
+               switch (readinput_settingsdlpath) {
+                  #Set New download Path
+                  1 {
+                     $settings_dlpath = set_settingsdlpath
+                     $settings.dlpath = $settings_dlpath
+                     Export-Csv -InputObject $settings -Path C:\Service\setupserver\bin\settings.csv -Delimiter ";"
+                     waitforenter
+                  }
+               }
             }
          }
       }

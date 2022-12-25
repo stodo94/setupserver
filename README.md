@@ -24,7 +24,7 @@ The Following Software can be installed directly with this script:
 5) SQL Management Studio
 
 Tools:
-1 ) Clean Systemdrive
+1) Clean Systemdrive
 
 Furthermore the Windows Firewall can be disabled
 

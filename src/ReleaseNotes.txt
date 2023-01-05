@@ -1,3 +1,9 @@
+v0.4.2:
+-Added "Get-DHCP Leases" to Tools
+-Added Settings (for Download Path), will be uses in later releases for Downloading Setup Files
+-Opimized Comments
+
+
 v0.4.1:
 -Check for Elevated Rights
 -Wait for Install Process in diffrent functions

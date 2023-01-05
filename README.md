@@ -25,6 +25,7 @@ The Following Software can be installed directly with this script:
 
 Tools:
 1) Clean Systemdrive
+2) Get DHCP Leases
 
 Furthermore the Windows Firewall can be disabled
 

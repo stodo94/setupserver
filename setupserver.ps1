@@ -36,7 +36,7 @@ $var_domain = $HOSTCOMPLETE.Domain
 $HOSTIP = Get-NetIPConfiguration | Where-Object {$_.IPv4DefaultGateway -ne $null -and $_.NetAdapter.Status -ne "Disconnected"}
 $ipaddress = $HOSTIP.IPv4Address.IPAddress
 
-
+#Main Menu
 function readinput () {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -228,7 +228,7 @@ function readinputtools {
    Choose the following Number
    1) Clean System Drive
    2) Get-DHCP Leases (DHCP-RSAT Tools must be Installed)
-      Get them from Main Menu 2-2-3 (in Progress)
+      Get them from Main Menu 2-2-3
    3) ...
 
    0) Cancel
@@ -307,7 +307,7 @@ function readinput_cleanmgr {
 }
 
 
-
+# Logoff Dialog
 function readinputlogoff {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -320,6 +320,7 @@ function readinputlogoff {
    return $choiceread
 }
 
+# Restart Dialog
 function readinputrestart {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -333,7 +334,7 @@ function readinputrestart {
    
 }
 
-#12 Settings
+# Settings Dialog
 function readinput_settings {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -348,6 +349,7 @@ function readinput_settings {
    
 }
 
+# Settings DL Path Dialog
 function readinput_settingsdlpath {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -363,6 +365,7 @@ function readinput_settingsdlpath {
    
 }
 
+# Set New DL Path
 function set_settingsdlpath {
    Clear-Host
    Write-Host -ForegroundColor Yellow -Object "
@@ -542,6 +545,7 @@ function fu_getalldhcpleases {
 #UserFrontend
 waitforenter
 
+# Download Settings if not there
 if (-not(Test-Path -Path "C:\service\setupserver\bin\settings.csv" -PathType Leaf)) {
    try {
       $ProgressPreference = 'SilentlyContinue'
@@ -779,7 +783,12 @@ do {
                      }
                   }
                }         
-            } 
+            }
+            #Get DHCP Leases
+            2 {
+               fu_getalldhcpleases
+               waitforenter
+            }
          }
       }
       6 {
